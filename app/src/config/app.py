@@ -1,9 +1,0 @@
-PROJECT_SETTINGS = {
-    'PROJECT_NAME': 'FunnyMailerSaaS',
-    'DEBUG': True,
-    'VERSION': 1
-}
-
-CORS_ALLOWED_ORIGINS = ''
-CORS_ALLOWED_HEADERS = '*'
-CORS_ALLOWED_METHODS = '*'

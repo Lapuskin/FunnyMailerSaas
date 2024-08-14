@@ -1,19 +1,22 @@
-from sqlalchemy import create_engine, MetaData
+import os
+
+from sqlalchemy import MetaData
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = "sqlite://"
+DATABASE_URL = "sqlite+aiosqlite:///database.db"
 
-engine = create_engine(DATABASE_URL)
-Session = sessionmaker(bind=engine)
+engine = create_async_engine(DATABASE_URL, echo=os.environ.get('DB_ECHO'))
+Session = sessionmaker(bind=engine, class_=AsyncSession)
 
 metadata = MetaData()
 metadata.bind = engine
 
 
-def get_db():
+async def get_db():
     '''Метод для доступа к базе данных'''
-    db = Session()
+    db = AsyncSession()
     try:
         yield db
     finally:
-        db.close()
+        await db.close()
